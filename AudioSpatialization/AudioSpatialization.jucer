@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="G2NwQw" name="AudioSpatialization" projectType="guiapp" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+  <MAINGROUP id="RDrCEr" name="AudioSpatialization">
+    <GROUP id="{F8B548D9-597B-5D11-606F-655417D56AF2}" name="Source">
+      <FILE id="Xc0KwL" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="guqfyp" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="UzB1O9" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+    </GROUP>
+    <FILE id="fuBInm" name="Panner.cpp" compile="1" resource="0" file="Builds/VisualStudio2022/Panner.cpp"/>
+    <FILE id="BAJqak" name="Panner.h" compile="0" resource="0" file="Builds/VisualStudio2022/Panner.h"/>
+    <FILE id="FRbKIE" name="Spatializer.cpp" compile="1" resource="0" file="Builds/VisualStudio2022/Spatializer.cpp"/>
+    <FILE id="Q9Kl9t" name="Spatializer.h" compile="0" resource="0" file="Builds/VisualStudio2022/Spatializer.h"/>
+    <FILE id="tgVbt3" name="Utils.h" compile="0" resource="0" file="Builds/VisualStudio2022/Utils.h"/>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
+  <EXPORTFORMATS>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="AudioSpatialization"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="AudioSpatialization"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="C:/Users/Jonas/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="C:/Users/Jonas/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="C:/Users/Jonas/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="C:/Users/Jonas/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="C:/Users/Jonas/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="C:/Users/Jonas/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="C:/Users/Jonas/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="C:/Users/Jonas/JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>
