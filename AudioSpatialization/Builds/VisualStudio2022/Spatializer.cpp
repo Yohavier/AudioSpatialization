@@ -61,11 +61,12 @@ float Spatializer::RightEarDelay(float sample)
 
 void Spatializer::CookVariables(Position sourcePos, Position listenerPos, double sampleRate)
 {
-	leftDelayBuffer = new float[sampleRate * 2];
-	rightDelayBuffer = new float[sampleRate * 2];
+	bufferSize = sampleRate * 4;
+	leftDelayBuffer = new float[bufferSize];
+	rightDelayBuffer = new float[bufferSize];
 
-	memset(leftDelayBuffer, 0, sampleRate * 2 * sizeof(float));
-	memset(rightDelayBuffer, 0, sampleRate * 2 * sizeof(float));
+	memset(leftDelayBuffer, 0, bufferSize * sizeof(float));
+	memset(rightDelayBuffer, 0,bufferSize * sizeof(float));
 
 	rightReadIndex = 0;
 	rightWriteIndex = 0;
@@ -77,10 +78,10 @@ void Spatializer::CookVariables(Position sourcePos, Position listenerPos, double
 	float yV = sourcePos.y;
 
 	float r_distance = sqrt(pow(xV + 0.1, 2) + pow(yV, 2));
-	float r_delay = r_distance / 1481;
+	float r_delay = r_distance / 343;
 
 	float l_distance = sqrt(pow(xV - 0.1, 2) + pow(yV, 2));
-	float l_delay = l_distance / 1481;
+	float l_delay = l_distance / 343;
 
 
 	rightDelayInSamples = r_delay * ((float)sampleRate);
