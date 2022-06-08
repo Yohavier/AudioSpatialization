@@ -23,8 +23,16 @@ float Spatializer::ComputeInterauralDelay(float sample, int channel)
 
 float Spatializer::LeftEarDelay(float sample)
 {
-	float y = leftDelayBuffer[leftReadIndex];
-	leftDelayBuffer[leftWriteIndex] = sample;
+	float delayedSample = leftDelayBuffer[leftReadIndex];
+	int lastWriteIndex = leftWriteIndex - 1;
+	if (lastWriteIndex < 0)
+	{
+		lastWriteIndex += bufferSize;
+	}
+
+	float interpolatedVal = InterpolateLastValue(leftDelayBuffer[lastWriteIndex], sample);
+
+	leftDelayBuffer[leftWriteIndex] = interpolatedVal;
 	leftWriteIndex++;
 	if (leftWriteIndex >= bufferSize)
 	{
@@ -37,13 +45,21 @@ float Spatializer::LeftEarDelay(float sample)
 		leftReadIndex = 0;
 	}
 
-	return y;
+	return delayedSample;
 }
 
 float Spatializer::RightEarDelay(float sample)
 {
-	float y = rightDelayBuffer[rightReadIndex];
-	rightDelayBuffer[rightWriteIndex] = sample;
+	float delayedSample = rightDelayBuffer[rightReadIndex];
+	int lastWriteIndex = rightWriteIndex - 1;
+	if (lastWriteIndex < 0)
+	{
+		lastWriteIndex += bufferSize;
+	}
+
+	float interpolatedVal = InterpolateLastValue(rightDelayBuffer[lastWriteIndex], sample);
+
+	rightDelayBuffer[rightWriteIndex] = interpolatedVal;
 	rightWriteIndex++;
 	if (rightWriteIndex >= bufferSize)
 	{
@@ -56,7 +72,7 @@ float Spatializer::RightEarDelay(float sample)
 		rightReadIndex = 0;
 	}
 
-	return y;
+	return delayedSample;
 }
 
 void Spatializer::PrepareToPlay(Position sourcePos, Position listenerPos, double sampleRate)
@@ -135,4 +151,9 @@ void Spatializer::ChangeDelay(Position sourcePos, Position listenerPos, double s
 	{
 		leftReadIndex += bufferSize;
 	}
+}
+
+float Spatializer::InterpolateLastValue(float lastSample, float currentSample)
+{
+	return (lastSample + currentSample) / 2;
 }

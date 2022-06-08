@@ -13,6 +13,7 @@ private:
 	float ComputeInterauralDelay(float sample, int channel);
 	float LeftEarDelay(float sample);
 	float RightEarDelay(float sample);
+	float InterpolateLastValue(float lastSample, float currentSample);
 
 private:
 	float* leftDelayBuffer;
