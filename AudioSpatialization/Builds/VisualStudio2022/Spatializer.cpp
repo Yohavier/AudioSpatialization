@@ -23,16 +23,10 @@ float Spatializer::ComputeInterauralDelay(float sample, int channel)
 
 float Spatializer::LeftEarDelay(float sample)
 {
+	leftDelayBuffer[leftWriteIndex] = sample;
+
 	float delayedSample = leftDelayBuffer[leftReadIndex];
-	int lastWriteIndex = leftWriteIndex - 1;
-	if (lastWriteIndex < 0)
-	{
-		lastWriteIndex += bufferSize;
-	}
 
-	float interpolatedVal = InterpolateLastValue(leftDelayBuffer[lastWriteIndex], sample);
-
-	leftDelayBuffer[leftWriteIndex] = interpolatedVal;
 	leftWriteIndex++;
 	if (leftWriteIndex >= bufferSize)
 	{
@@ -47,20 +41,14 @@ float Spatializer::LeftEarDelay(float sample)
 
 	return delayedSample;
 }
-
+ 
 float Spatializer::RightEarDelay(float sample)
 {
+	rightDelayBuffer[rightWriteIndex] = sample;
+
 	float delayedSample = rightDelayBuffer[rightReadIndex];
-	int lastWriteIndex = rightWriteIndex - 1;
-	if (lastWriteIndex < 0)
-	{
-		lastWriteIndex += bufferSize;
-	}
-
-	float interpolatedVal = InterpolateLastValue(rightDelayBuffer[lastWriteIndex], sample);
-
-	rightDelayBuffer[rightWriteIndex] = interpolatedVal;
 	rightWriteIndex++;
+
 	if (rightWriteIndex >= bufferSize)
 	{
 		rightWriteIndex = 0;
@@ -77,7 +65,7 @@ float Spatializer::RightEarDelay(float sample)
 
 void Spatializer::PrepareToPlay(Position sourcePos, Position listenerPos, double sampleRate)
 {
-	bufferSize = sampleRate * 4;
+	bufferSize = sampleRate * 2;
 	leftDelayBuffer = new float[bufferSize];
 	rightDelayBuffer = new float[bufferSize];
 
@@ -139,8 +127,10 @@ void Spatializer::ChangeDelay(Position sourcePos, Position listenerPos, double s
 	leftDelayGrow = leftNewDelay - leftDelayInSamples;
 	rightDelayGrow = rightNewDelay - rightDelayInSamples;
 
-	leftReadIndex = leftWriteIndex - leftDelayGrow;
-	rightReadIndex = rightWriteIndex - rightDelayGrow;
+	
+	leftReadIndex -= leftDelayGrow;
+	rightReadIndex -= rightDelayGrow;
+	
 
 	if (rightReadIndex < 0)
 	{
@@ -151,9 +141,4 @@ void Spatializer::ChangeDelay(Position sourcePos, Position listenerPos, double s
 	{
 		leftReadIndex += bufferSize;
 	}
-}
-
-float Spatializer::InterpolateLastValue(float lastSample, float currentSample)
-{
-	return (lastSample + currentSample) / 2;
 }
