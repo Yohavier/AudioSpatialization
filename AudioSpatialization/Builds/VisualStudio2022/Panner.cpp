@@ -15,12 +15,14 @@ void Panner::mouseDown(const juce::MouseEvent & mouse)
 {
     CalculateSourcePoint(mouse);
     repaint();
+    sourceChanged = true;
 }
 
 void Panner::mouseDrag(const juce::MouseEvent& mouse)
 {
     CalculateSourcePoint(mouse);
     repaint();
+    sourceChanged = true;
 }
 
 void Panner::CalculateSourcePoint(const juce::MouseEvent& mouse)

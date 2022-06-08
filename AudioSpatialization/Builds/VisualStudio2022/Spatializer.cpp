@@ -59,7 +59,7 @@ float Spatializer::RightEarDelay(float sample)
 	return y;
 }
 
-void Spatializer::CookVariables(Position sourcePos, Position listenerPos, double sampleRate)
+void Spatializer::PrepareToPlay(Position sourcePos, Position listenerPos, double sampleRate)
 {
 	bufferSize = sampleRate * 4;
 	leftDelayBuffer = new float[bufferSize];
@@ -95,6 +95,41 @@ void Spatializer::CookVariables(Position sourcePos, Position listenerPos, double
 	}
 
 	leftReadIndex = leftWriteIndex - (int)leftDelayInSamples;
+
+	if (leftReadIndex < 0)
+	{
+		leftReadIndex += bufferSize;
+	}
+}
+
+void Spatializer::ChangeDelay(Position sourcePos, Position listenerPos, double sampleRate)
+{
+	int leftDelayGrow = 0;
+	int rightDelayGrow = 0;
+
+
+	float xV = sourcePos.x;
+	float yV = sourcePos.y;
+
+	float r_distance = sqrt(pow(xV + 0.1, 2) + pow(yV, 2));
+	float r_delay = r_distance / 343;
+
+	float l_distance = sqrt(pow(xV - 0.1, 2) + pow(yV, 2));
+	float l_delay = l_distance / 343;
+
+	auto leftNewDelay = l_delay * ((float)sampleRate);
+	auto rightNewDelay = r_delay * ((float)sampleRate);
+
+	leftDelayGrow = leftNewDelay - leftDelayInSamples;
+	rightDelayGrow = rightNewDelay - rightDelayInSamples;
+
+	leftReadIndex = leftWriteIndex - leftDelayGrow;
+	rightReadIndex = rightWriteIndex - rightDelayGrow;
+
+	if (rightReadIndex < 0)
+	{
+		rightReadIndex += bufferSize;
+	}
 
 	if (leftReadIndex < 0)
 	{

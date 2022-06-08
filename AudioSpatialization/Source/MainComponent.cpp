@@ -61,6 +61,11 @@ void MainComponent::openButtonClicked()
 void MainComponent::paint (juce::Graphics& g)
 {
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    if (panner.sourceChanged)
+    {
+        spatializer.ChangeDelay(panner.sourcePosition, panner.listenerPosition, transportSource.sampleRate);
+        panner.sourceChanged = false;
+    }
 }
 
 void MainComponent::resized()
@@ -85,7 +90,7 @@ void MainComponent::resized()
 
 void MainComponent::playButtonClicked()
 {
-    spatializer.CookVariables(panner.sourcePosition, panner.listenerPosition, transportSource.sampleRate);
+    spatializer.PrepareToPlay(panner.sourcePosition, panner.listenerPosition, transportSource.sampleRate);
     changeState(Starting);
 }
 

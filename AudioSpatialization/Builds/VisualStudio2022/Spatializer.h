@@ -6,7 +6,8 @@ public:
 	Spatializer() {}
 
 	float ComputeSpatial(float input, int channel);
-	void CookVariables(Position sourcePos, Position listenerPos, double sampleRate);
+	void PrepareToPlay(Position sourcePos, Position listenerPos, double sampleRate);
+	void ChangeDelay(Position sourcePos, Position listenerPos, double sampleRate);
 
 private:
 	float ComputeInterauralDelay(float sample, int channel);
@@ -27,5 +28,8 @@ private:
 
 	float leftDelayInSamples = 0;
 	float rightDelayInSamples = 0;
+
+	float leftDelayGrowthParameter = 0;
+	float rightDelayGrowthParameter = 0;
 };
 

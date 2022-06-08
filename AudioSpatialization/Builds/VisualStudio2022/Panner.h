@@ -28,6 +28,8 @@ public:
     Position sourcePosition = Position(0, 0); 
     Position listenerPosition = Position(0, 0);
 
+    bool sourceChanged = false;
+
     float azimuthAngle = 0;
 
 private:
