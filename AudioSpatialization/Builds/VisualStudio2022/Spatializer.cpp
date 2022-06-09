@@ -111,8 +111,7 @@ void Spatializer::ChangeDelay(Position sourcePos, Position listenerPos, double s
 	int leftDelayGrow = 0;
 	int rightDelayGrow = 0;
 
-
-	float xV = sourcePos.x;
+ 	float xV = sourcePos.x;
 	float yV = sourcePos.y;
 
 	float r_distance = sqrt(pow(xV + 0.1, 2) + pow(yV, 2));
@@ -124,14 +123,29 @@ void Spatializer::ChangeDelay(Position sourcePos, Position listenerPos, double s
 	auto leftNewDelay = l_delay * ((float)sampleRate);
 	auto rightNewDelay = r_delay * ((float)sampleRate);
 
-	leftDelayGrow = leftNewDelay - leftDelayInSamples;
-	rightDelayGrow = rightNewDelay - rightDelayInSamples;
+	if (leftReadIndex > rightReadIndex)
+	{
+		leftReadIndex = rightReadIndex;
+	}
+	else
+	{
+		rightReadIndex = leftReadIndex;
+	}
+	int l = 0;
+	int r = 0;
+
+	if (leftNewDelay > rightNewDelay)
+	{
+		int diff = leftNewDelay - rightNewDelay;
+		leftReadIndex -= diff;
+	}
+	else
+	{
+		int diff = rightNewDelay - leftNewDelay;
+		rightReadIndex -= diff;
+	}
 
 	
-	leftReadIndex -= leftDelayGrow;
-	rightReadIndex -= rightDelayGrow;
-	
-
 	if (rightReadIndex < 0)
 	{
 		rightReadIndex += bufferSize;
