@@ -2,7 +2,11 @@
 
 float Spatializer::ComputeSpatial(float input, int channel)
 {
-	return ComputeInterauralDelay(input, channel);
+	float returnValue = ComputeInterauralDelay(input, channel);
+	returnValue = CalculateBlauertschBands(returnValue, channel);
+	returnValue = CalculateDistanceFalloff(returnValue, channel);
+
+	return returnValue;
 }
 
 float Spatializer::ComputeInterauralDelay(float sample, int channel)
@@ -111,13 +115,18 @@ void Spatializer::ChangeDelay(Position sourcePos, Position listenerPos, double s
 	int leftDelayGrow = 0;
 	int rightDelayGrow = 0;
 
- 	float xV = sourcePos.x;
+	float xV = sourcePos.x;
 	float yV = sourcePos.y;
 
-	float r_distance = sqrt(pow(xV + 0.1, 2) + pow(yV, 2));
+	if (yV > 0)
+		front = true;
+	else
+		front = false;
+
+	r_distance = sqrt(pow(xV + 0.1, 2) + pow(yV, 2));
 	float r_delay = r_distance / 343;
 
-	float l_distance = sqrt(pow(xV - 0.1, 2) + pow(yV, 2));
+	l_distance = sqrt(pow(xV - 0.1, 2) + pow(yV, 2));
 	float l_delay = l_distance / 343;
 
 	auto leftNewDelay = l_delay * ((float)sampleRate);
@@ -155,4 +164,51 @@ void Spatializer::ChangeDelay(Position sourcePos, Position listenerPos, double s
 	{
 		leftReadIndex += bufferSize;
 	}
+}
+
+float Spatializer::CalculateDistanceFalloff(float sample, int channel)
+{
+	float distanceValue = 0;
+	if (channel == 0)
+		distanceValue = l_distance;
+	else if (channel == 1)
+		distanceValue = r_distance;
+
+	float damping = 1 / distanceValue;
+	return sample * damping;
+}
+
+float Spatializer::CalculateBlauertschBands(float sample, int channel)
+{
+	float val = sample;
+	if (channel == 0)
+	{
+		if (front)
+		{
+			val = l_Damp_1000Hz.ProcessSample(
+					l_Boost_3500Hz.ProcessSample(
+						l_Boost_350Hz.ProcessSample(sample)));
+		}
+		else
+		{
+			val = l_Boost_11000Hz.ProcessSample(
+					l_Boost_1000Hz.ProcessSample(sample));
+		}
+	}
+	else if (channel == 1)
+	{
+		if (front)
+		{
+			val = r_Damp_1000Hz.ProcessSample(
+					r_Boost_3500Hz.ProcessSample(
+						r_Boost_350Hz.ProcessSample(sample)));
+		}
+		else
+		{
+			val = r_Boost_11000Hz.ProcessSample(
+					r_Boost_1000Hz.ProcessSample(sample));
+		}
+	}
+	
+	return val;
 }

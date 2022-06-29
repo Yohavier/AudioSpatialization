@@ -9,6 +9,8 @@
       <FILE id="UzB1O9" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
     </GROUP>
+    <FILE id="UbrXdK" name="Biquad.cpp" compile="1" resource="0" file="Builds/VisualStudio2022/Biquad.cpp"/>
+    <FILE id="TtbEeq" name="Biquad.h" compile="0" resource="0" file="Builds/VisualStudio2022/Biquad.h"/>
     <FILE id="fuBInm" name="Panner.cpp" compile="1" resource="0" file="Builds/VisualStudio2022/Panner.cpp"/>
     <FILE id="BAJqak" name="Panner.h" compile="0" resource="0" file="Builds/VisualStudio2022/Panner.h"/>
     <FILE id="FRbKIE" name="Spatializer.cpp" compile="1" resource="0" file="Builds/VisualStudio2022/Spatializer.cpp"/>

@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
+    <ClCompile Include="Biquad.cpp"/>
     <ClCompile Include="Panner.cpp"/>
     <ClCompile Include="Spatializer.cpp"/>
     <ClCompile Include="C:\Users\Jonas\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
@@ -2067,6 +2068,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
+    <ClInclude Include="Biquad.h"/>
     <ClInclude Include="Panner.h"/>
     <ClInclude Include="Spatializer.h"/>
     <ClInclude Include="Utils.h"/>

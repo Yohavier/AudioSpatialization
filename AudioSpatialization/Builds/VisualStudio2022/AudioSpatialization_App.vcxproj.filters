@@ -442,6 +442,9 @@
     <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>AudioSpatialization\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Biquad.cpp">
+      <Filter>AudioSpatialization</Filter>
+    </ClCompile>
     <ClCompile Include="Panner.cpp">
       <Filter>AudioSpatialization</Filter>
     </ClCompile>
@@ -2510,6 +2513,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>AudioSpatialization\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Biquad.h">
+      <Filter>AudioSpatialization</Filter>
     </ClInclude>
     <ClInclude Include="Panner.h">
       <Filter>AudioSpatialization</Filter>
