@@ -174,7 +174,7 @@ float Spatializer::CalculateDistanceFalloff(float sample, int channel)
 	else if (channel == 1)
 		distanceValue = r_distance;
 
-	float damping = 1 / distanceValue;
+	float damping = 1 / (distanceValue * 0.5);
 	return sample * damping;
 }
 

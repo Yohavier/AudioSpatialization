@@ -31,8 +31,8 @@ void Panner::CalculateSourcePoint(const juce::MouseEvent& mouse)
     relativeX = relativePos.x / getWidth();
     relativeY = relativePos.y / getHeight();
 
-    sourcePosition.x = relativeX * 100;
-    sourcePosition.y = relativeY * 100;
+    sourcePosition.x = relativeX * 60;
+    sourcePosition.y = relativeY * 60;
 }
 
 void Panner::DrawRaster(juce::Graphics& g)
@@ -47,12 +47,12 @@ void Panner::DrawRaster(juce::Graphics& g)
         gridSize = getWidth();
     }
 
-    for (int i = 0; i <= 10; i++)
+    for (int i = 0; i <= 6; i++)
     {
-        juce::Line<float> lineH(juce::Point<float>(0, 0 + (gridSize / 10) * i), juce::Point<float>(gridSize, 0 + (gridSize / 10) * i));
+        juce::Line<float> lineH(juce::Point<float>(0, 0 + (gridSize / 6) * i), juce::Point<float>(gridSize, 0 + (gridSize / 6) * i));
         g.drawLine(lineH, 2.0f);
 
-        juce::Line<float> lineV(juce::Point<float>(0 + (gridSize / 10) * i, 0), juce::Point<float>(0 + (gridSize / 10) * i, gridSize));
+        juce::Line<float> lineV(juce::Point<float>(0 + (gridSize / 6) * i, 0), juce::Point<float>(0 + (gridSize / 6) * i, gridSize));
         g.drawLine(lineV, 2.0f);
     }
 }

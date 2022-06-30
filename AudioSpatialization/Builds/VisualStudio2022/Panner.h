@@ -36,5 +36,4 @@ private:
     float relativeX = 0;
     float relativeY = 0;
     float gridSize = 0;
-    int horizontalLines = 10;
 };
